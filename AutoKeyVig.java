@@ -7,6 +7,10 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+/**
+ * Execute with:
+ *  java AutoKeyVig <key-length> <cipher-text>
+ */
 public class AutoKeyVig {
 
     private final static Set<Character> ALPHABET = Set.of(
@@ -75,7 +79,9 @@ public class AutoKeyVig {
     }
 
     public static void main(String[] args) {
-        final int numBuckets = Integer.parseInt(args[0]);
+        final int numKeySize = Integer.parseInt(args[0]);
+
+        final int numBuckets = numKeySize * 2;
 
         final StringBuilder ct = new StringBuilder(args[1]);
 
@@ -117,7 +123,7 @@ public class AutoKeyVig {
 
         // Output buckets
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("output.txt", false))) {
-            for (int i = 0; i < buckets.length; i++) {
+            for (int i = 0; i < numKeySize; i++) {
                 final int index = i;
 
                 // Collect the missing letters from each bucket
